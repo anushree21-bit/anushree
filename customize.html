@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customize Your Perfume</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(120deg, #ff9a9e, #fad0c4);
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: #ff4081;
+            color: white;
+            padding: 15px;
+            font-size: 24px;
+        }
+
+        .customization-box {
+            margin: 20px auto;
+            padding: 20px;
+            width: 90%;
+            max-width: 500px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-size: 18px;
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        select, button, input[type="checkbox"], input[type="text"] {
+            padding: 10px;
+            margin: 5px;
+            font-size: 16px;
+        }
+
+        .summary {
+            background: #fff3f3;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 10px;
+            font-size: 18px;
+        }
+
+        .price {
+            font-size: 22px;
+            font-weight: bold;
+            color: #ff4081;
+        }
+
+        button {
+            background: #ff4081;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #e03572;
+        }
+
+        #bottlePreview {
+            width: 150px;
+            margin: 15px;
+        }
+
+        footer {
+            background: #222;
+            color: white;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        🌸 Customize Your Perfume 🌸
+    </header>
+
+    <!-- Perfume Customization Form -->
+    <section class="customization-box">
+        <h2>Select Your Ingredients</h2>
+
+        <label>Enter Your Name for the Bottle:</label>
+        <input type="text" id="customerName" placeholder="e.g. Emily's Fragrance">
+
+        <label>Top Notes:</label>
+        <input type="checkbox" value="Citrus" data-price="200"> Citrus 🍊
+        <input type="checkbox" value="Lavender" data-price="250"> Lavender 💜
+        <input type="checkbox" value="Bergamot" data-price="180"> Bergamot 🍋
+
+        <label>Middle Notes:</label>
+        <input type="checkbox" value="Rose" data-price="300"> Rose 🌹
+        <input type="checkbox" value="Jasmine" data-price="280"> Jasmine 🌼
+        <input type="checkbox" value="Vanilla" data-price="250"> Vanilla 🍦
+
+        <label>Base Notes:</label>
+        <input type="checkbox" value="Musk" data-price="350"> Musk 🖤
+        <input type="checkbox" value="Sandalwood" data-price="320"> Sandalwood 🌳
+        <input type="checkbox" value="Patchouli" data-price="300"> Patchouli 🍂
+
+        <label>Select Fragrance Strength:</label>
+        <select id="fragranceStrength">
+            <option value="Light">Light 🌿</option>
+            <option value="Medium" selected>Medium 🌸</option>
+            <option value="Strong">Strong 🔥</option>
+        </select>
+
+        <label>Select Bottle Size:</label>
+        <select id="bottleSize" onchange="updateBottlePreview()">
+            <option value="30" data-price="500">30ml - ₹500</option>
+            <option value="50" data-price="800">50ml - ₹800</option>
+            <option value="100" data-price="1200">100ml - ₹1200</option>
+        </select>
+
+        <img id="bottlePreview" src="https://via.placeholder.com/150" alt="Bottle Preview">
+
+        <!-- Summary of Selection -->
+        <div class="summary">
+            <h3>Your Custom Perfume</h3>
+            <p><strong>Name:</strong> <span id="perfumeName">Your Custom Perfume</span></p>
+            <p><strong>Ingredients:</strong> <span id="selectedIngredients">No ingredients selected yet.</span></p>
+            <p><strong>Size:</strong> <span id="selectedSize">30ml</span></p>
+            <p><strong>Fragrance Strength:</strong> <span id="selectedStrength">Medium</span></p>
+            <p class="price">Total Price: ₹<span id="totalPrice">500</span></p>
+        </div>
+
+        <button onclick="applyDiscount()">Apply Discount Code</button>
+        <input type="text" id="discountCode" placeholder="Enter Code">
+
+        <button onclick="placeOrder()">Proceed to Checkout 🛒</button>
+    </section>
+
+    <footer>
+        &copy; 2025 AI Beauty Hub | All Rights Reserved
+    </footer>
+
+    <script>
+        function updateBottlePreview() {
+            let bottleSize = document.getElementById("bottleSize").value;
+            let bottleImage = document.getElementById("bottlePreview");
+
+            if (bottleSize == 30) bottleImage.src = "https://via.placeholder.com/150/ff9a9e";
+            if (bottleSize == 50) bottleImage.src = "https://via.placeholder.com/150/fad0c4";
+            if (bottleSize == 100) bottleImage.src = "https://via.placeholder.com/150/ff6b6b";
+
+            calculateTotal();
+        }
+
+        function calculateTotal() {
+            let bottleSize = document.getElementById("bottleSize");
+            let bottlePrice = parseInt(bottleSize.options[bottleSize.selectedIndex].dataset.price);
+            document.getElementById("selectedSize").innerText = bottleSize.value + "ml";
+
+            let ingredients = document.querySelectorAll("input[type='checkbox']:checked");
+            let total = bottlePrice;
+            let selectedNotes = [];
+
+            ingredients.forEach(ing => {
+                total += parseInt(ing.dataset.price);
+                selectedNotes.push(ing.value);
+            });
+
+            document.getElementById("totalPrice").innerText = total;
+            document.getElementById("selectedIngredients").innerText = selectedNotes.length ? selectedNotes.join(", ") : "No ingredients selected yet.";
+            document.getElementById("selectedStrength").innerText = document.getElementById("fragranceStrength").value;
+        }
+
+        function placeOrder() {
+            let perfumeName = document.getElementById("customerName").value || "Custom Perfume";
+            document.getElementById("perfumeName").innerText = perfumeName;
+            alert(`🎉 Order Confirmed: ${perfumeName}`);
+        }
+
+        function applyDiscount() {
+            let code = document.getElementById("discountCode").value;
+            if (code === "PERFUME10") {
+                let price = document.getElementById("totalPrice").innerText;
+                document.getElementById("totalPrice").innerText = price - 100;
+                alert("Discount Applied: ₹100 Off!");
+            } else {
+                alert("Invalid Discount Code.");
+            }
+        }
+    </script>
+
+</body>
+</html>

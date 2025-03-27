@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Beauty Hub | Chatbot</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 0; background: #f9f9f9; }
+        .container { width: 80%; max-width: 500px; margin: 20px auto; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+        .chat-box { height: 300px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; border-radius: 5px; }
+        .chat-message { padding: 8px; border-radius: 5px; margin: 5px 0; }
+        .user-message { background: #ff4081; color: white; text-align: right; }
+        .bot-message { background: #ddd; text-align: left; }
+        input { width: 80%; padding: 10px; margin-top: 10px; border-radius: 5px; border: 1px solid #ddd; }
+        button { background: #ff4081; color: white; padding: 10px; border: none; cursor: pointer; font-size: 1em; border-radius: 5px; margin: 5px; }
+        button:hover { background: #e6006e; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>💬 AI Beauty Chatbot</h2>
+        <p id="welcome"></p>
+        <div class="chat-box" id="chatBox"></div>
+        <input type="text" id="userInput" placeholder="Type your question...">
+        <button onclick="chatbotReply()">Ask AI</button>
+        <button onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+        let username = localStorage.getItem("loggedInUser");
+        if (!username) {
+            window.location.href = "index.html";
+        }
+
+        document.getElementById("welcome").innerText = `Welcome, ${username}!`;
+
+        let chatBox = document.getElementById("chatBox");
+
+        function loadChatHistory() {
+            let history = JSON.parse(localStorage.getItem("chatHistory_" + username)) || [];
+            history.forEach(msg => chatBox.innerHTML += `<div class="${msg.type}-message chat-message">${msg.text}</div>`);
+        }
+
+        function chatbotReply() {
+            let userText = document.getElementById("userInput").value.trim();
+            if (userText === "") return;
+
+            chatBox.innerHTML += `<div class="user-message chat-message">${userText}</div>`;
+
+            let botReply = getAIResponse(userText);
+
+            setTimeout(() => {
+                chatBox.innerHTML += `<div class="bot-message chat-message">${botReply}</div>`;
+                saveChat(userText, botReply);
+            }, 1000);
+
+            document.getElementById("userInput").value = "";
+        }
+
+        function getAIResponse(userText) {
+            if (userText.toLowerCase().includes("dry skin")) return "Use hydrating moisturizers & avoid alcohol-based perfumes.";
+            if (userText.toLowerCase().includes("oily skin")) return "Use oil-free products & fresh, citrus perfumes.";
+            return "I'm here to help with beauty recommendations!";
+        }
+
+        function saveChat(userText, botReply) {
+            let history = JSON.parse(localStorage.getItem("chatHistory_" + username)) || [];
+            history.push({ type: "user", text: userText });
+            history.push({ type: "bot", text: botReply });
+            localStorage.setItem("chatHistory_" + username, JSON.stringify(history));
+        }
+
+        function logout() {
+            localStorage.removeItem("loggedInUser");
+            window.location.href = "index.html";
+        }
+
+        loadChatHistory();
+    </script>
+
+</body>
+</html>
+
