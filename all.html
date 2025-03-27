@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Beauty Hub</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header>
+        <h1>AI Beauty Hub</h1>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="showSection('home')">Home</a></li>
+                <li><a href="#" onclick="showSection('skin-analysis')">AI Skin Analysis</a></li>
+                <li><a href="#" onclick="showSection('login')">Login</a></li>
+            </ul>
+        </nav>
+     </header>
+
+    <!-- Home Section -->
+    <section id="home">
+        <h2>Welcome to AI Beauty Hub</h2>
+        <p>Discover AI-powered recommendations for perfumes, skincare, and more!</p>
+        
+        <!-- Categories Section -->
+
+    <div class="categories">
+     <div class="category" onclick="showSection('perfumes')">
+        <a href="C:/Users/Anushree/project/perfumes.html">
+            <img src="c:/Users/Anushree/Downloads/ai-generated-8414957_1280.png" alt="Perfumes">
+            <h3>Perfumes</h3>
+        </a>
+    </div>
+</div>
+
+            <div class="category" onclick="showSection('skincare')">
+                <img src="c:\Users\Anushree\Downloads\young-woman-doing-her-morning-routine (1).jpg" alt="Skincare">
+                <a href="C:\Users\Anushree\project\skincare.html">
+                <h3>Skincare</h3></a>
+            </div>
+
+            <div class="category" onclick="showSection('customize')">
+                <img src="c:\Users\Anushree\Downloads\bundo-kim-ur2zmbseUIA-unsplash.jpg" alt="customize">
+                <a href="C:\Users\Anushree\project\customize.html">
+                <h3>customize</h3></a>
+            </div>
+    </section>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: #f9f9f9;
+            margin: 0;
+        }
+        header {
+            background: #ff4081;
+            color: white;
+            padding: 15px;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        section {
+            padding: 50px;
+        }
+        .hidden {
+            display: none;
+        }
+        .categories {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .category {
+            margin: 15px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .category img {
+            width: 150px;
+            border-radius: 10px;
+        }
+        .recommendation, .product {
+            display: inline-block;
+            padding: 20px;
+            margin: 10px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        footer {
+            background: #222;
+            color: white;
+            padding: 20px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+
+</body>
+</html>
